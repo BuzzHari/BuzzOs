@@ -1,5 +1,6 @@
 #include "screen.h"
 #include "ports.h"
+#include "../kernel/utils.h"
 
 int get_cursor_offset();
 void set_cursor_offset(int offset);
@@ -7,7 +8,7 @@ int print_char(char c, int col, int row, char attr);
 int get_offset(int col, int row);
 int get_offset_row(int offset);
 int get_offset_col(int offset);
-
+int scroll(int curr_offset);
 
 void kprint_at(char *message, int col, int row) {
     /* Set cursor if col/row are negative */
@@ -60,8 +61,35 @@ int print_char(char c, int col, int row, char attr) {
         vidmem[offset+1] = attr;
         offset += 2;
     }
+    
+    //Scroll if needed.
+    //offset = scroll(offset);
+    
+    //sets the cursor offset to the screen port.
     set_cursor_offset(offset);
     return offset;
+}
+
+int scroll(int curr_offset){
+    
+    if(curr_offset < (MAX_COLS*MAX_ROWS*2))
+        return curr_offset;
+    
+    for(int i = 1; i < MAX_ROWS; i++){
+        //TODO: Implement this better.
+        mem_copy((unsigned char*)(get_offset(0, i)+ (unsigned char*)VIDEO_ADDRESS),
+                 (unsigned char*)(get_offset(0, i-1)+(unsigned char*)VIDEO_ADDRESS),
+                 MAX_COLS * 2);
+    }
+    unsigned char *last_line = get_offset(0, MAX_ROWS-1) + (unsigned char*)VIDEO_ADDRESS;
+    for(int i = 0; i < MAX_COLS; i++)
+        *(last_line+i) = 0;
+
+    //Move the currsor offset to last line.
+    curr_offset -= 2*MAX_COLS;
+
+    return curr_offset;
+
 }
 
 int get_cursor_offset() {
