@@ -63,7 +63,7 @@ int print_char(char c, int col, int row, char attr) {
     }
     
     //Scroll if needed.
-    //offset = scroll(offset);
+    offset = scroll(offset);
     
     //sets the cursor offset to the screen port.
     set_cursor_offset(offset);

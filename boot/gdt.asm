@@ -3,6 +3,7 @@ gdt_start: ;labels are needed to compute sizes and jumps
     dd 0x0  
     dd 0x0 
 
+;8 byte segment descriptors
 
 ; GDT for code segment. base = 0x00000000, lenght = 0xfffff
 ; base = 0x0, limit = 0xfffff
@@ -39,5 +40,7 @@ gdt_descriptor:
     dd gdt_start ; address (32 bit)
 
 ;Address of the code segment and data segment.
+;CODE_SEG: offset at 8-byte, ie 0x08
+;DATA_SEG: offset at 16-byte, ie 0x10
 CODE_SEG equ gdt_code - gdt_start
 DATA_SEG equ gdt_data - gdt_start
