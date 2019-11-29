@@ -157,9 +157,11 @@ void isr_handler(registers_t r) {
 }
 
 void register_interrupt_handler(u8 n, isr_t handler) {
-    char s[3];
-    int_to_ascii(n,s);
-    kprint(s);
+    /*
+     *char s[3];
+     *int_to_ascii(n,s);
+     *kprint(s);
+     */
     interrupt_handlers[n] = handler;
 }
 
