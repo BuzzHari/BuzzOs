@@ -1,6 +1,6 @@
 #Exapnds to list of files that match the patterns.
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c)
-HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c libc/*.c)
+HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h libc/*.h)
 
 #Creates a list of objects files to build,
 #by replacing the '.c' extensions in C_SOURCES with '.o'
@@ -43,7 +43,7 @@ debug: os-image.bin kernel.elf
 
 clean:
 	rm -rf *.bin *.dis *.o os-image.bin *.elf
-	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o
+	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o cpu/*.o
 
 
 

@@ -2,6 +2,8 @@
 #include "utils.h"
 #include "../cpu/isr.h"
 #include "../cpu/idt.h"
+#include "../cpu/timer.h"
+#include "../drivers/keyboard.h"
 
 void main(){
     //clear_screen();
@@ -10,7 +12,12 @@ void main(){
     //kprint("Scroll_1\n");
     //kprint("Scroll_2\n");
     isr_install();
-    __asm__ __volatile__("int $2");
-    __asm__ __volatile__("int $3");
-    __asm__ __volatile__("int $19");
+    asm volatile("sti");
+    //init_timer(5);
+    init_keyboard();
+    /*
+     *__asm__ __volatile__("int $2");
+     *__asm__ __volatile__("int $3");
+     *__asm__ __volatile__("int $19");
+     */
 }
