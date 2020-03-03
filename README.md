@@ -1,3 +1,3 @@
 # BuzzOS
 
-A real simple OS.
+Work in Progress.
